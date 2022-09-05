@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon src/main.js",
-    "dev": "nodemon --watch \"./src/*.js\" --exec \"npm run server\""
+    "server": "nodemon app.js",
+    "start": "nodemon --watch \"./routes/*.js\" --exec \"npm run server\""
   },
   "license": "MIT",
   "devDependencies": {

@@ -2,15 +2,7 @@
 
 const express = require('express');
 
-const fs = require('fs');
-
-const app = express();
-
-const PORT = 4000;
-
-const userRouter = express.Router();
-
-app.use('/users', userRouter);
+const router = express.Router();
 
 const USER = [
   {
@@ -25,64 +17,7 @@ const USER = [
   },
 ];
 
-app.set('view engine', 'ejs');
-app.set('views', 'views');
-
-app.use(express.static('views'));
-
-// app.use('/', async (req, res, next) => {
-//   console.log('middleware 1st');
-//   req.reqTime = new Date();
-//   req.fileContent = await fs.promises.readFile('package.json', 'utf-8');
-//   next();
-//   // res.send('Hello, Express World!');
-//   // res.end() -> 404일때
-// });
-// app.use((req, res, next) => {
-//   // console.log('middleware 2nd');
-//   console.log(req.reqTime);
-//   console.log(req.fileContent);
-//   next();
-// });
-
-// app.use((req, res) => {
-//   console.log('middleware 3rd');
-//   res.send('통신 종료');
-// });
-
-// app.get('/:id', (req, res) => {
-//   console.log(req.params);
-//   res.send(`id는 ${req.params.id}`);
-// });
-
-// app.get('/:id/:name/:gender', (req, res) => {
-//   console.log(req.params);
-//   res.send(req.params);
-// });
-
-// app.get('/:email/:pw/:name/:gender', (req, res) => {
-//   console.log(req.params);
-//   res.send(req.params);
-// });
-
-// app.get('/', (req, res) => {
-//   // console.log(req.query.title);
-//   // console.log(req.query.content);
-//   console.log(req.query);
-//   // 예외처리
-//   const q = req.query;
-//   if (q.email && q.pw && q.name && q.gender) {
-//     res.send(req.query);
-//   } else {
-//     res.send('Unexpected query');
-//   }
-// });
-
-app.listen(PORT, () => {
-  console.log(`The Express Server is reunning at ${PORT}`);
-});
-
-userRouter.get('/', (req, res) => {
+router.get('/', (req, res) => {
   const userLen = USER.length;
   res.render('index', { USER, userCounts: userLen });
   // res.send(USER);
@@ -93,7 +28,7 @@ userRouter.get('/', (req, res) => {
   // }
 });
 
-userRouter.get('/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   const userData = USER.find((user) => user.id === req.params.id);
   if (userData) {
     res.send(userData);
@@ -102,7 +37,7 @@ userRouter.get('/:id', (req, res) => {
   }
 });
 
-userRouter.post('/', (req, res) => {
+router.post('/', (req, res) => {
   if (req.query.id && req.query.name && req.query.email) {
     const newUser = {
       id: req.query.id,
@@ -117,7 +52,7 @@ userRouter.post('/', (req, res) => {
 });
 
 // 실습 내가 짠 코드
-// userRouter.put('/:id', (req, res) => {
+// router.put('/:id', (req, res) => {
 //   const arrIndex = USER.findIndex((user) => user.id === req.params.id);
 //   if (USER[arrIndex].id) {
 //     USER[arrIndex] = {
@@ -130,7 +65,7 @@ userRouter.post('/', (req, res) => {
 //   }
 // });
 
-userRouter.put('/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   if (req.query.id && req.query.name && req.query.email) {
     const userData = USER.find((user) => user.id === req.params.id);
     if (userData) {
@@ -151,7 +86,7 @@ userRouter.put('/:id', (req, res) => {
 });
 
 // 실습 내가 짠 코드
-// userRouter.delete('/:id', (req, res) => {
+// router.delete('/:id', (req, res) => {
 //   const arrIndex = USER.findIndex((user) => user.id === req.params.id);
 //   if (req.params.id === USER[arrIndex].id) {
 //     delete USER[arrIndex];
@@ -161,7 +96,7 @@ userRouter.put('/:id', (req, res) => {
 //   }
 // });
 
-userRouter.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const arrIndex = USER.findIndex((user) => user.id === req.params.id);
   if (arrIndex !== -1) {
     USER.splice(arrIndex, 1);
@@ -170,3 +105,5 @@ userRouter.delete('/:id', (req, res) => {
     res.end('해당 ID를 가진 회원이 없습니다.');
   }
 });
+
+module.exports = router;
