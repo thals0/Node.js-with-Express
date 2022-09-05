@@ -33,7 +33,10 @@ router.get('/:id', (req, res) => {
   if (userData) {
     res.send(userData);
   } else {
-    res.end('ID not found');
+    const err = new Error('ID not found');
+    err.statusCode = 404;
+    throw err;
+    // res.end('ID not found');
   }
 });
 
@@ -47,7 +50,10 @@ router.post('/', (req, res) => {
     USER.push(newUser);
     res.send('회원 등록 완료');
   } else {
-    res.end('잘못된 쿼리 입니다.');
+    const err = new Error('Unexpected Query');
+    err.statusCode = 404;
+    throw err;
+    // res.end('잘못된 쿼리 입니다.');
   }
 });
 
@@ -78,10 +84,16 @@ router.put('/:id', (req, res) => {
       USER[arrIndex] = modifyUser;
       res.send('회원 수정 완료');
     } else {
-      res.end('해당 ID를 가진 회원이 없습니다.');
+      // res.end('해당 ID를 가진 회원이 없습니다.');
+      const err = new Error('ID not found');
+      err.statusCode = 404;
+      throw err;
     }
   } else {
-    res.end('부적절한 쿼리 입니다.');
+    const err = new Error('Unexpected Query');
+    err.statusCode = 404;
+    throw err;
+    // res.end('부적절한 쿼리 입니다.');
   }
 });
 
@@ -102,7 +114,10 @@ router.delete('/:id', (req, res) => {
     USER.splice(arrIndex, 1);
     res.send('회원 삭제 완료');
   } else {
-    res.end('해당 ID를 가진 회원이 없습니다.');
+    const err = new Error('ID not found');
+    err.statusCode = 404;
+    throw err;
+    // res.end('해당 ID를 가진 회원이 없습니다.');
   }
 });
 

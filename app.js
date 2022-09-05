@@ -15,6 +15,13 @@ app.set('views', 'views');
 
 app.use(express.static('public'));
 
+// 변수 순서 주의!
+app.use((err, req, res, next) => {
+  console.log(err.stack);
+  res.status(err.statusCode);
+  res.end(err.message);
+});
+
 app.listen(PORT, () => {
   console.log(`The Express Server is reunning at ${PORT}`);
 });
