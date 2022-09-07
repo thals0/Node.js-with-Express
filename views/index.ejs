@@ -5,34 +5,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
   <link rel="stylesheet" href="./css/style.css">
+  <title>index</title>
 </head>
 
 <body>
-  <h1>회원 목록</h1>
-  <h2>총 회원 수 <%= userCounts%>
-  </h2>
-  <ul>
-    <% if(userCounts> 0 ){ %>
-    <% for(let i=0; i< userCounts; i++){ %>
-    <li>
-      <p>ID: <%= USER[i].id%>
-      </p>
-      <p>NAME: <%=USER[i].name %>
-      </p>
-      <p>EMAIL: <%=USER[i].email %>
-      </p>
-    </li>
-    <% } %>
-    <% } else { %>
-    <li>
-      회원 정보가 없습니다.
-    </li>
-    <% } %>
-  </ul>
-  <img src="./img/baymax.jpeg" alt="">
-
+  <h1>Hello, Express Service!</h1>
+  <h2><a href="/users">Move to User Service</a></h2>
+  <h2><a href="/posts">Move to Post Service</a></h2>
 </body>
 
 </html>

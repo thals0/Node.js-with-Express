@@ -2,15 +2,22 @@
 
 const express = require('express');
 
+// const bodyParser = require('body-parser');
+
 const app = express();
 
 const PORT = 4000;
 
-const users = require('./routes/users');
-const posts = require('./routes/posts');
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use('/users', users);
-app.use('/posts', posts);
+const mainRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const postsRouter = require('./routes/posts');
+
+app.use('/', mainRouter);
+app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');

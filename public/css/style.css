@@ -1,5 +1,19 @@
+ul,
+ol {
+  list-style: none;
+}
+
+li {
+  margin-bottom: 24px;
+  /* border-bottom: 1px solid #dfdfdf; */
+}
+
 body {
   margin: 4vw;
   background-color: black;
   color: white;
+}
+
+a {
+  color: #dfdfdf;
 }

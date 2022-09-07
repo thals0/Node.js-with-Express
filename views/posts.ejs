@@ -10,6 +10,17 @@
 </head>
 
 <body>
+  <form action="/posts" method="POST">
+    <div>
+      <label>글 제목</label>
+      <input type="text" name="title">
+    </div>
+    <div>
+      <label>글 내용</label>
+      <input type="text" name="content">
+    </div>
+    <button type="submit">제출</button>
+  </form>
   <h1>글 목록</h1>
   <h2>총 글 수 <%= postCounts%>
   </h2>
@@ -21,6 +32,7 @@
       </p>
       <p>content: <%=POST[i].content %>
       </p>
+      <a href="" onclick="deletePost('<%= POST[i].title %>');">삭제</a>
     </li>
     <% } %>
     <% } else { %>
@@ -31,5 +43,20 @@
   </ul>
 
 </body>
+
+<script>
+  function deletePost(title) {
+    // console.log(title);
+    fetch(`http://localhost:4000/posts/${title}`, {
+      method: 'delete',
+      headers: {
+        'Content-type': 'application/json'
+      },
+    }).then((res) => {
+      console.log(res);
+      location.reload();
+    })
+  }
+</script>
 
 </html>
