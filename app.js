@@ -14,10 +14,12 @@ app.use(express.urlencoded({ extended: false }));
 const mainRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
+const boardRouter = require('./routes/board');
 
 app.use('/', mainRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
+app.use('/board', boardRouter);
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
