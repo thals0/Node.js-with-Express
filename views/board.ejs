@@ -9,6 +9,20 @@
 </head>
 
 <body>
+  <form action="/board" method="POST">
+    <div>
+      <label>글 제목</label>
+      <input type="text" name="title">
+    </div>
+    <div>
+      <label>글 내용</label>
+      <input type="text" name="content">
+    </div>
+    <button type="submit">제출</button>
+  </form>
+  <h1>글 목록</h1>
+  <h2>총 글 수 <%= postCounts%>
+  </h2>
 
 </body>
 
