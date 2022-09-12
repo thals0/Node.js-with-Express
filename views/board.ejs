@@ -23,7 +23,39 @@
   <h1>글 목록</h1>
   <h2>총 글 수 <%= postCounts%>
   </h2>
+  <ul>
+    <% if(postCounts> 0 ){ %>
+    <% for(let i=0; i< postCounts; i++){ %>
+    <li>
+      <p>title: <%= POST[i].title%>
+      </p>
+      <p>content: <%=POST[i].content %>
+      </p>
+      <a href="" onclick="deletePost('<%= POST[i].title %>');">삭제</a>
+    </li>
+    <% } %>
+    <% } else { %>
+    <li>
+      글이 없습니다.
+    </li>
+    <% } %>
+  </ul>
 
 </body>
+
+<script>
+  function deletePost(title) {
+    // console.log(title);
+    fetch(`http://localhost:4000/posts/${title}`, {
+      method: 'delete',
+      headers: {
+        'Content-type': 'application/json'
+      },
+    }).then((res) => {
+      console.log(res);
+      location.reload();
+    })
+  }
+</script>
 
 </html>
