@@ -5,11 +5,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
   <title>BOARD</title>
 </head>
 
 <body>
-  <form action="/board" method="POST">
+  <!-- <form action="/board" method="POST">
     <div>
       <label>글 제목</label>
       <input type="text" name="title">
@@ -19,20 +20,21 @@
       <input type="text" name="content">
     </div>
     <button type="submit">제출</button>
-  </form>
-  <h1>글 목록</h1>
-  <h2>총 글 수 <%= postCounts%>
-  </h2>
+  </form> -->
+  <h1>Somin Board</h1>
+  <p>현재 등록 글: <%= boardCounts%>
+  </p>
+  <a href="/board/write">글쓰기</a>
   <ul>
-    <% if(postCounts> 0 ){ %>
-    <% for(let i=0; i< postCounts; i++){ %>
+    <% if(boardCounts > 0 ){ %>
+    <% for(let i=0; i< boardCounts; i++){ %>
     <li>
-      <p>title: <%= POST[i].title%>
+      <p>title: <%= BOARD[i].title%>
       </p>
-      <p>content: <%=POST[i].content %>
+      <p>content: <%=BOARD[i].content %>
       </p>
-      <a href="" onclick="deletePost('<%= POST[i].title %>');">삭제</a>
-      <a href="" onclick="">수정</a>
+      <a href="" onclick="deleteBoard('<%= BOARD[i].title %>');">삭제</a>
+      <a href="" onclick="editBoard('<%= BOARD[i].title %>');">수정</a>
     </li>
     <% } %>
     <% } else { %>
@@ -45,9 +47,19 @@
 </body>
 
 <script>
-  function deletePost(title) {
-    // console.log(title);
-    fetch(`http://localhost:4000/posts/${title}`, {
+  function editBoard(title) {
+    fetch(`http://localhost:4000/board/edit/${title}`, {
+      method: 'get',
+      // headers: {
+      //   'Content-type': 'application/json'
+      // },
+    }).then((res) => {
+      console.log(res);
+    })
+  }
+
+  function deleteBoard(title) {
+    fetch(`http://localhost:4000/board/${title}`, {
       method: 'delete',
       headers: {
         'Content-type': 'application/json'

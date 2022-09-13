@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Board Edit</title>
+</head>
+
+<body>
+  <h1>Write Mode</h1>
+  <form action="/board/edit/:title" method="POST" class="board_form">
+    <div>
+      <label>제목</label>
+      <input id="title" type="text" name="title" value="<%= BOARD[i].title%>" onchange='printName()'>
+    </div>
+    <div>
+      <label>내용</label>
+      <input id="content" type="text" name="content" value="<%=BOARD[i].content %>" onchange='printName()'>
+    </div>
+    <button type="submit">글 수정하기</button>
+  </form>
+</body>
+
+<script>
+  function printTitle() {
+    const name = document.getElementById('title').value;
+    console.log(name);
+  }
+
+  function printContent() {
+    const name = document.getElementById('content').value;
+    console.log(name);
+
+  }
+</script>
+
+</html>
