@@ -5,14 +5,58 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/style.css">
+  <!-- <link rel="stylesheet" href="./css/style.css"> -->
   <title>index</title>
+  <style>
+    * {
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #eee;
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
+    h1 {
+      margin: 8vh;
+      text-align: center;
+    }
+
+    div.inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      border: 1px solid #000;
+      border-radius: 20px;
+      margin: 5vw 10vw 0;
+      height: 60vh;
+    }
+
+    .inner div {
+      margin: 50px;
+      width: 20vw;
+      height: 10vw;
+      background-color: #FFA500;
+      text-align: center;
+      line-height: 10vw;
+      border-radius: 16px;
+    }
+  </style>
 </head>
 
 <body>
   <h1>Hello, Express Service!</h1>
-  <h2><a href="/users">Move to User Service</a></h2>
-  <h2><a href="/posts">Move to Post Service</a></h2>
+  <div class="inner">
+    <div class="box1"><a href="/users">Move to User Service</a></div>
+    <div class="box2"><a href="/posts">Move to Post Service</a></div>
+    <div class="box3"><a href="/board">Move to Board Service</a></div>
+  </div>
 </body>
 
 </html>
