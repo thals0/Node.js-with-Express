@@ -9,44 +9,46 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
 });
-client.connect((err) => {
-  const collection = client.db('node1').collection('users');
-  // perform actions on the collection object
-  client.close();
-});
+module.exports = client;
 
-async function main() {
-  await client.connect();
+// client.connect((err) => {
+//   const collection = client.db('node1').collection('users');
+//   // perform actions on the collection object
+//   client.close();
+// });
 
-  const users = client.db('node1').collection('users');
+// async function main() {
+//   await client.connect();
 
-  await users.deleteMany({});
-  await users.insertMany([
-    {
-      name: 'pororo',
-      age: 5,
-    },
-    {
-      name: 'loopy',
-      age: 6,
-    },
-    {
-      name: 'crong',
-      age: 4,
-    },
-  ]);
+//   const users = client.db('node1').collection('users');
 
-  // mongoDB module안에 있는 forEach(js랑 다른거임)
-  // const data = users.find({});
-  // const arr = await data.toArray();
-  const data = users.find({
-    name: 'loopy',
-  });
-  console.log(data);
-  const arr = data.toArray();
-  console.log(arr);
-  // await data.forEach(console.log);
+//   await users.deleteMany({});
+//   await users.insertMany([
+//     {
+//       name: 'pororo',
+//       age: 5,
+//     },
+//     {
+//       name: 'loopy',
+//       age: 6,
+//     },
+//     {
+//       name: 'crong',
+//       age: 4,
+//     },
+//   ]);
 
-  await client.close();
-}
-main();
+//   // mongoDB module안에 있는 forEach(js랑 다른거임)
+//   // const data = users.find({});
+//   // const arr = await data.toArray();
+//   const data = users.find({
+//     name: 'loopy',
+//   });
+//   console.log(data);
+//   const arr = data.toArray();
+//   console.log(arr);
+//   // await data.forEach(console.log);
+
+//   await client.close();
+// }
+// main();
