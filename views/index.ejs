@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <!-- <link rel="stylesheet" href="./css/style.css"> -->
   <title>index</title>
   <style>
@@ -42,7 +44,7 @@
       margin: 50px;
       width: 20vw;
       height: 10vw;
-      background-color: #FF6B9A;
+      background-color: #ff9771;
       text-align: center;
       line-height: 10vw;
       border-radius: 16px;
@@ -50,7 +52,69 @@
   </style>
 </head>
 
+<script>
+  console.log(document.cookie);
+  // document.cookie = "user=test1; expires=15 sep 2022 13:00:00 GMT; path=/"
+  // document.cookie = "test=test2; expires=19 sep 2022 13:00:00 GMT; path=/"
+  // console.log(document.cookie);
+
+
+  // 쿠키가 있으면 alert창 띄우기
+  // index.js에서 httpOnly 옵셥을 써서 alert창 뜰 수 없음
+  window.onload = () => {
+    // if (document.cookie) alert("Front 쿠키 있어요! " + document.cookie);
+  }
+</script>
+
 <body>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">cookie 실습</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          쿠키 실습
+          <div class="text-end mt-3">
+            <input type="checkbox" id="cookie"> <label for="cookie" style="cursor: pointer;">오늘 하루 안보기</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="modalClose();">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="container mt-5">
+    <h2 class="mt-5 text-center"><a href="/board">게시판 바로가기</a></h2>
+  </div> -->
+
+  <script>
+    const myModal = new bootstrap.Modal('#exampleModal');
+    if ('<%= popup %>' !== 'hide') myModal.show();
+
+    function modalClose() {
+      // 하루 동안 안보기 기능 구현하기
+      const cookie = document.getElementById("cookie");
+      if (cookie.checked == true) {
+        fetch('/cookie', {
+          method: 'post',
+          headers: {
+            'Content-type': 'application/json'
+          },
+        }).then((res) => {
+          console.log(res.data);
+        }).catch((err) => {
+          console.log(err);
+        })
+      }
+      myModal.hide();
+    }
+  </script>
+
   <h1>Hello, Express Service!</h1>
   <div class="inner">
     <div class="box1"><a href="/users">Move to User Service</a></div>

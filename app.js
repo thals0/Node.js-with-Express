@@ -5,11 +5,13 @@ const express = require('express');
 // const bodyParser = require('body-parser');
 
 const app = express();
+const cookieParser = require('cookie-parser');
 
 const PORT = 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 const mainRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
