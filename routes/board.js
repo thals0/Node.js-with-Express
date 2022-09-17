@@ -7,7 +7,7 @@ const router = express.Router();
 const mongoClient = require('./mongo');
 
 function isLogin(req, res, next) {
-  if (req.session.login) {
+  if (req.session.login || req.user) {
     next();
   } else {
     res.redirect('./login');
@@ -23,7 +23,7 @@ router.get('/', isLogin, async (req, res) => {
   res.render('board', {
     ARTICLE,
     articleCounts: articleLen,
-    userId: req.session.userId,
+    userId: req.session.userId ? req.session.userId : req.user.id,
   });
 });
 
