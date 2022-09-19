@@ -6,15 +6,12 @@ const router = express.Router();
 
 const mongoClient = require('./mongo');
 
-function isLogin(req, res, next) {
-  if (req.session.login || req.user) {
-    next();
-  } else {
-    res.redirect('./login');
-  }
-}
+// router 이름이 겹쳐서 아래 방법은 사용 불가
+// const { router, isLogin } = require('./login');
 
-router.get('/', isLogin, async (req, res) => {
+const login = require('./login');
+
+router.get('/', login.isLogin, async (req, res) => {
   // 글 전체 목록 보여주기
   const client = await mongoClient.connect();
   const cursor = client.db('node1').collection('board');
@@ -23,16 +20,20 @@ router.get('/', isLogin, async (req, res) => {
   res.render('board', {
     ARTICLE,
     articleCounts: articleLen,
-    userId: req.session.userId ? req.session.userId : req.user.id,
+    userId: req.session.userId
+      ? req.session.userId
+      : req.user?.id
+      ? req.user?.id
+      : req.signedCookies.user,
   });
 });
 
-router.get('/write', isLogin, (req, res) => {
+router.get('/write', login.isLogin, (req, res) => {
   // 글 쓰기 모드로 이동
   res.render('board_write');
 });
 
-router.post('/write', isLogin, async (req, res) => {
+router.post('/write', login.isLogin, async (req, res) => {
   // 글 추가 기능 수행
   if (req.body.title && req.body.content) {
     const newArticle = {
@@ -52,7 +53,7 @@ router.post('/write', isLogin, async (req, res) => {
   }
 });
 
-router.get('/edit/title/:title', isLogin, async (req, res) => {
+router.get('/edit/title/:title', login.isLogin, async (req, res) => {
   // 글 수정 모드로 이동
   const client = await mongoClient.connect();
   const cursor = client.db('node1').collection('board');
@@ -60,7 +61,7 @@ router.get('/edit/title/:title', isLogin, async (req, res) => {
   res.render('board_edit', { selectedArticle });
 });
 
-router.post('/edit/title/:title', isLogin, async (req, res) => {
+router.post('/edit/title/:title', login.isLogin, async (req, res) => {
   // 글 수정 기능 수행
   if (req.body.title && req.body.content) {
     const client = await mongoClient.connect();
@@ -77,7 +78,7 @@ router.post('/edit/title/:title', isLogin, async (req, res) => {
   }
 });
 
-router.delete('/delete/title/:title', isLogin, async (req, res) => {
+router.delete('/delete/title/:title', login.isLogin, async (req, res) => {
   // 글 삭제 기능 수행
   const client = await mongoClient.connect();
   const cursor = client.db('node1').collection('board');

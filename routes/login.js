@@ -6,6 +6,15 @@ const router = express.Router();
 const passport = require('passport');
 // const mongoClient = require('./mongo');
 
+const isLogin = (req, res, next) => {
+  // session or passport or cookies 중 하나의 정보라도 있으면
+  if (req.session.login || req.user || req.signedCookes.user) {
+    next();
+  } else {
+    res.redirect('./login');
+  }
+};
+
 router.get('/', (req, res) => {
   res.render('login');
 });
@@ -20,6 +29,11 @@ router.post('/', async (req, res, next) => {
     }
     req.logIn(user, (err) => {
       if (err) throw err;
+      res.cookie('user', req.body.id, {
+        expires: new Date(Date.now() + 1000 * 60),
+        httpOnly: true,
+        signed: true,
+      });
       res.redirect('/board');
     });
   })(req, res, next);
@@ -37,4 +51,4 @@ router.get('/logout', (req, res, next) => {
   // });
 });
 
-module.exports = router;
+module.exports = { router, isLogin };

@@ -15,7 +15,7 @@ const PORT = 4000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // cookie-parser
-app.use(cookieParser());
+app.use(cookieParser('bay'));
 app.use(
   session({
     secret: 'thals',
@@ -38,6 +38,7 @@ const boardRouter = require('./routes/board');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 const localStrategy = require('./routes/localStrategy');
+
 localStrategy();
 
 app.use('/', mainRouter);
@@ -45,7 +46,7 @@ app.use('/', mainRouter);
 // app.use('/posts', postsRouter);
 app.use('/board', boardRouter);
 app.use('/register', registerRouter);
-app.use('/login', loginRouter);
+app.use('/login', loginRouter.router);
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
