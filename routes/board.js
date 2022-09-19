@@ -36,7 +36,8 @@ router.post('/write', isLogin, async (req, res) => {
   // 글 추가 기능 수행
   if (req.body.title && req.body.content) {
     const newArticle = {
-      id: req.session.userId,
+      // session으로 login한 경우가 없으면 req.user(passport) 방법으로 login한 유저.id 가져오기
+      id: req.session.userId ? req.session.userId : req.user.id,
       title: req.body.title,
       content: req.body.content,
     };

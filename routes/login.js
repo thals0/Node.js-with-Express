@@ -15,7 +15,7 @@ router.post('/', async (req, res, next) => {
     if (err) throw err;
     if (!user) {
       return res.send(
-        `${info.message} <br><a href="/login">로그인 페이지로 이동</a>`
+        `${info.message} <br><a href="/register">회원가입 페이지로 이동</a>`
       );
     }
     req.logIn(user, (err) => {
@@ -25,11 +25,16 @@ router.post('/', async (req, res, next) => {
   })(req, res, next);
 });
 
-router.get('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) throw err;
-    res.redirect('/');
+router.get('/logout', (req, res, next) => {
+  req.logOut((err) => {
+    if (err) return next(err);
+    return res.redirect('/');
   });
+  // session으로 logOut
+  // req.session.destroy((err) => {
+  //   if (err) throw err;
+  //   res.redirect('/');
+  // });
 });
 
 module.exports = router;
