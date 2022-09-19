@@ -8,7 +8,7 @@ const passport = require('passport');
 
 const isLogin = (req, res, next) => {
   // session or passport or cookies 중 하나의 정보라도 있으면
-  if (req.session.login || req.user || req.signedCookes.user) {
+  if (req.session.login || req.user || req.signedCookies.user) {
     next();
   } else {
     res.redirect('./login');
