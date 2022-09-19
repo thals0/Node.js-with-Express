@@ -24,7 +24,7 @@ router.post('/', async (req, res, next) => {
     if (err) throw err;
     if (!user) {
       return res.send(
-        `${info.message} <br><a href="/register">회원가입 페이지로 이동</a>`
+        `${info.message} <br><a href="/register">회원가입 페이지로 이동</a> <br><a href="/">메인 페이지로 이동</a>`
       );
     }
     req.logIn(user, (err) => {

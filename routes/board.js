@@ -40,6 +40,7 @@ router.post('/write', login.isLogin, async (req, res) => {
     const newArticle = {
       // session으로 login한 경우가 없으면 req.user(passport) 방법으로 login한 유저.id 가져오기
       id: req.session.userId ? req.session.userId : req.user.id,
+      userName: req.user?.name ? req.user.name : req.user.name,
       title: req.body.title,
       content: req.body.content,
     };
