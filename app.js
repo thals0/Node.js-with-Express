@@ -8,8 +8,9 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
+require('dotenv').config();
 
-const PORT = 4000;
+const PORT = process.env.PORT;
 
 // body-parser
 app.use(express.json());
