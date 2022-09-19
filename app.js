@@ -38,9 +38,9 @@ const mainRouter = require('./routes/index');
 const boardRouter = require('./routes/board');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
-const localStrategy = require('./routes/localStrategy');
+const passportRouter = require('./routes/passport');
 
-localStrategy();
+passportRouter();
 
 app.use('/', mainRouter);
 // app.use('/users', usersRouter);

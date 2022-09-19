@@ -51,4 +51,14 @@ router.get('/logout', (req, res, next) => {
   // });
 });
 
+router.get('/auth/naver', passport.authenticate('naver'));
+
+router.get(
+  '/auth/naver/callback',
+  passport.authenticate('naver', {
+    // 로그인 성공시 board로 실패시 메인화면으로
+    successRedirect: '/board',
+    failureRedirect: '/',
+  })
+);
 module.exports = { router, isLogin };

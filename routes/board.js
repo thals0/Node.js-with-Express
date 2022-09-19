@@ -12,6 +12,7 @@ const mongoClient = require('./mongo');
 const login = require('./login');
 
 router.get('/', login.isLogin, async (req, res) => {
+  // console.log(req.user);
   // 글 전체 목록 보여주기
   const client = await mongoClient.connect();
   const cursor = client.db('node1').collection('board');
