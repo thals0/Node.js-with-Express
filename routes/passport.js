@@ -1,6 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const NaverStrategy = require('passport-naver').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const mongoClient = require('./mongo');
 
@@ -45,7 +46,7 @@ module.exports = () => {
         if (result !== null) {
           cb(null, result);
         } else {
-          const newNaverUser = {
+          const newUser = {
             id: profile.id,
             name:
               profile.displayName !== undefined
@@ -55,10 +56,46 @@ module.exports = () => {
           };
           const dbResult = await userCursor.insertOne(newNaverUser);
           if (dbResult.acknowledged) {
-            cb(null, newNaverUser);
+            cb(null, newUser);
           } else {
             cb(null, false, {
               message: '네이버 회원 생성 에러',
+            });
+          }
+        }
+      }
+    )
+  );
+
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CB_URL,
+      },
+      async (accessToken, refreshToken, profile, cb) => {
+        console.log(profile);
+        const client = await mongoClient.connect();
+        const userCursor = client.db('node1').collection('users');
+        const result = await userCursor.findOne({ id: profile.id });
+        if (result !== null) {
+          cb(null, result);
+        } else {
+          const newUser = {
+            id: profile.id,
+            name:
+              profile.displayName !== undefined
+                ? profile.displayName
+                : profile.emails[0]?.value,
+            provider: profile.provider,
+          };
+          const dbResult = await userCursor.insertOne(newNaverUser);
+          if (dbResult.acknowledged) {
+            cb(null, newUser);
+          } else {
+            cb(null, false, {
+              message: '구글 회원 생성 에러',
             });
           }
         }

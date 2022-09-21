@@ -61,4 +61,14 @@ router.get(
     failureRedirect: '/',
   })
 );
+
+router.get('/auth/google', passport.authenticate('google', { scope: 'email' }));
+router.get(
+  '/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/board',
+    failureRedirect: '/',
+  })
+);
+
 module.exports = { router, isLogin };
