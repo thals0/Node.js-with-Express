@@ -144,6 +144,10 @@
           <textarea name="content" id="content" cols="30" rows="10" required><%= selectedArticle.content %>
           </textarea>
         </div>
+        <div class="form_img">
+          <h3>이미지 업로드</h3>
+          <input type="file" name="img" value="<%= selectedArticle.img %>" />
+        </div>
         <button type="submit">글 수정하기</button>
       </form>
     </div>

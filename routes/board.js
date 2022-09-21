@@ -2,6 +2,11 @@
 
 const express = require('express');
 
+const multer = require('multer');
+
+// fs는 기본 모듈
+const fs = require('fs');
+
 const router = express.Router();
 
 const mongoClient = require('./mongo');
@@ -10,6 +15,28 @@ const mongoClient = require('./mongo');
 // const { router, isLogin } = require('./login');
 
 const login = require('./login');
+
+const dir = './uploads';
+// 메모리storage : 메모리에 잠깐 저장
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // 성공시 dir에 file 저장
+    cb(null, dir);
+  },
+  // 업로드 할 파일명 설정
+  filename: (req, file, cb) => {
+    // 파일명이 겹치지 않도록 처리(기존 파일명 + 현재 날짜,시간)
+    cb(null, file.filename + '_' + Date.now());
+  },
+});
+
+const limits = {
+  // 2기가
+  fileSize: 1024 * 1024 * 2,
+};
+
+// 실제 업로드 수행
+const upload = multer({ storage, limits });
 
 router.get('/', login.isLogin, async (req, res) => {
   // console.log(req.user);
@@ -34,7 +61,11 @@ router.get('/write', login.isLogin, (req, res) => {
   res.render('board_write');
 });
 
-router.post('/write', login.isLogin, async (req, res) => {
+router.post('/write', login.isLogin, upload.single('img'), async (req, res) => {
+  console.log(req.file);
+  // 폴더가 없으면 만들어줌
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+  console.log(req.file);
   // 글 추가 기능 수행
   if (req.body.title && req.body.content) {
     const newArticle = {
@@ -43,6 +74,7 @@ router.post('/write', login.isLogin, async (req, res) => {
       userName: req.user?.name ? req.user.name : req.user.name,
       title: req.body.title,
       content: req.body.content,
+      img: req.file ? req.file.filename : null,
     };
     const client = await mongoClient.connect();
     const cursor = client.db('node1').collection('board');

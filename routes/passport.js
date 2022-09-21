@@ -76,7 +76,7 @@ module.exports = () => {
         callbackURL: process.env.GOOGLE_CB_URL,
       },
       async (accessToken, refreshToken, profile, cb) => {
-        console.log(profile);
+        // console.log(profile);
         const client = await mongoClient.connect();
         const userCursor = client.db('node1').collection('users');
         const result = await userCursor.findOne({ id: profile.id });
@@ -111,7 +111,7 @@ module.exports = () => {
         callbackURL: process.env.KAKAO_CB_URL,
       },
       async (accessToken, refreshToken, profile, cb) => {
-        console.log(profile);
+        // console.log(profile);
         const client = await mongoClient.connect();
         const userCursor = client.db('node1').collection('users');
         const result = await userCursor.findOne({ id: profile.id });

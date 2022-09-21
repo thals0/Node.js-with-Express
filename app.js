@@ -53,6 +53,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 app.use(express.static('public'));
+app.use('/uploads', express.static('uploads'));
 
 // 변수 순서 주의!
 app.use((err, req, res, next) => {
