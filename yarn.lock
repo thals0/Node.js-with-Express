@@ -1520,6 +1520,14 @@
   dependencies:
     "passport-oauth2" "1.x.x"
 
+"passport-kakao@^1.0.1":
+  "integrity" "sha512-uItaYRVrTHL6iGPMnMZvPa/O1GrAdh/V6EMjOHcFlQcVroZ9wgG7BZ5PonMNJCxfHQ3L2QVNRnzhKWUzSsumbw=="
+  "resolved" "https://registry.npmjs.org/passport-kakao/-/passport-kakao-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "passport-oauth2" "~1.1.2"
+    "pkginfo" "~0.3.0"
+
 "passport-local@^1.0.0":
   "integrity" "sha512-9wCE6qKznvf9mQYYbgJ3sVOHmCWoUNMVFoZzNoznmISbhnNNPhN9xfY3sLmScHMetEJeoY7CXwfhCe7argfQow=="
   "resolved" "https://registry.npmjs.org/passport-local/-/passport-local-1.0.0.tgz"
@@ -1551,6 +1559,15 @@
     "oauth" "0.9.x"
     "passport-strategy" "1.x.x"
     "utils-merge" "1.x.x"
+
+"passport-oauth2@~1.1.2":
+  "integrity" "sha512-wpsGtJDHHQUjyc9WcV9FFB0bphFExpmKtzkQrxpH1vnSr6RcWa3ZEGHx/zGKAh2PN7Po9TKYB1fJeOiIBspNPA=="
+  "resolved" "https://registry.npmjs.org/passport-oauth2/-/passport-oauth2-1.1.2.tgz"
+  "version" "1.1.2"
+  dependencies:
+    "oauth" "0.9.x"
+    "passport-strategy" "1.x.x"
+    "uid2" "0.0.x"
 
 "passport-oauth2@1.x.x":
   "integrity" "sha512-ZbV43Hq9d/SBSYQ22GOiglFsjsD1YY/qdiptA+8ej+9C1dL1TVB+mBE5kDH/D4AJo50+2i8f4bx0vg4/yDDZCQ=="
@@ -1616,6 +1633,11 @@
   "integrity" "sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA=="
   "resolved" "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz"
   "version" "2.3.1"
+
+"pkginfo@~0.3.0":
+  "integrity" "sha512-yO5feByMzAp96LtP58wvPKSbaKAi/1C4kV9XpTctr6EepnP6F33RBNOiVrdz9BrPA98U2BMFsTNHo44TWcbQ2A=="
+  "resolved" "https://registry.npmjs.org/pkginfo/-/pkginfo-0.3.1.tgz"
+  "version" "0.3.1"
 
 "prelude-ls@^1.2.1":
   "integrity" "sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g=="
