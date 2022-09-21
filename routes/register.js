@@ -1,11 +1,34 @@
 // @ts-check
 
 const express = require('express');
+const crypto = require('crypto');
 
 const router = express.Router();
 const mongoClient = require('./mongo');
 
+const createHashedPassword = (password) => {
+  const salt = crypto.randomBytes(64).toString('base64');
+  // console.log('salt', salt);
+  const hashedPassword = crypto
+    .pbkdf2Sync(password, salt, 10, 64, 'sha512')
+    .toString('base64');
+  return { hashedPassword, salt };
+};
+
+const verifyPassword = (password, salt, userPassword) => {
+  const hashed = crypto
+    .pbkdf2Sync(password, salt, 10, 64, 'sha512')
+    .toString('base64');
+  // console.log(hashed);
+  // console.log(userPassword);
+  // hashed와 userPassword 같은지 비교
+  if (hashed === userPassword) return true;
+  return false;
+};
+
 router.get('/', (req, res) => {
+  // const userPW = createHashedPassword('1234');
+  // console.log(verifyPassword('1234', salt, userPW));
   res.render('register');
 });
 // 로그인은 무조건 post로 get으로 하면 url에 아이디, 비번 보임
@@ -14,11 +37,14 @@ router.post('/', async (req, res) => {
   const userCursor = client.db('node1').collection('users');
   const duplicated = await userCursor.findOne({ id: req.body.id });
 
+  const pwResult = createHashedPassword(req.body.password);
+  // hpwResult는 객체를 반납
   if (duplicated === null) {
     const result = await userCursor.insertOne({
       id: req.body.id,
       name: req.body.id,
-      password: req.body.password,
+      password: pwResult.hashedPassword,
+      salt: pwResult.salt,
     });
     if (result.acknowledged) {
       res.status(200);
@@ -37,4 +63,4 @@ router.post('/', async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = { router, verifyPassword };

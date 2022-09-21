@@ -46,7 +46,7 @@ app.use('/', mainRouter);
 // app.use('/users', usersRouter);
 // app.use('/posts', postsRouter);
 app.use('/board', boardRouter);
-app.use('/register', registerRouter);
+app.use('/register', registerRouter.router);
 app.use('/login', loginRouter.router);
 
 app.set('view engine', 'ejs');
