@@ -60,7 +60,7 @@ app.use('/uploads', express.static('uploads'));
 // 변수 순서 주의!
 app.use((err, req, res, next) => {
   console.log(err.stack);
-  res.status(err.statusCode);
+  res.status(err.statusCode || 500);
   res.end(err.message);
 });
 
